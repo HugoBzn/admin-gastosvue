@@ -1,6 +1,6 @@
 <script setup>
 import imagen from "../assets/img/grafico.jpg";
-import { formatearCantidad } from "../helpers/currency.js";
+import { formatearCantidad } from "../helpers";
 
 const props = defineProps({
   presupuesto: {
