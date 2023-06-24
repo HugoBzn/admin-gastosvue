@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import Alerta from "./Alerta.vue";
 
-const presupuesto = ref(0);
+const presupuesto = ref();
 const error = ref("");
 
 const emit = defineEmits(["definir-presupuesto"]);
@@ -73,6 +73,7 @@ const definirPresupuesto = () => {
   background-color: var(--azul);
   border: none;
   padding: 1rem;
+  border-radius: 1rem;
   text-align: center;
   font-size: 2rem;
   margin-top: 2rem;
