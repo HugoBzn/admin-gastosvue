@@ -2,7 +2,7 @@
 import { ref } from "vue";
 import Alerta from "./Alerta.vue";
 
-const presupuesto = ref();
+const presupuesto = ref('');
 const error = ref("");
 
 const emit = defineEmits(["definir-presupuesto"]);
