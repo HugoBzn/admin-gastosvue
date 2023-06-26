@@ -293,4 +293,24 @@ header h1 {
   font-weight: 900;
   color: var(--gris-oscuro);
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--azul);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2667ce;
+}
 </style>
