@@ -25,6 +25,8 @@ const props = defineProps({
     required: true,
   },
 });
+
+defineEmits(["seleccionar-gasto"]);
 </script>
 
 <template>
@@ -33,7 +35,7 @@ const props = defineProps({
       <img :src="diccionarioIconos[gasto.categoria]" alt="Icono gasto" class="icono" />
       <div class="detalles">
         <p class="categoria">{{ gasto.categoria }}</p>
-        <p class="nombre">{{ gasto.nombre }}</p>
+        <p class="nombre" @click="$emit('seleccionar-gasto', gasto.id)">{{ gasto.nombre }}</p>
         <p class="fecha">
           Fecha:
           <span>
@@ -81,21 +83,22 @@ const props = defineProps({
   font-size: 2.4rem;
   font-weight: 700;
   cursor: pointer;
+  text-transform: capitalize;
 }
 
 .fecha {
-    font-size: 1.6rem;
-    font-weight: 900;
-    color: var(--gris-oscuro);
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--gris-oscuro);
 }
 
 .fecha span {
-    font-weight: 400;
+  font-weight: 400;
 }
 
 .cantidad {
-    font-size: 3rem;
-    font-weight: 900;
-    margin: 0;
+  font-size: 3rem;
+  font-weight: 900;
+  margin: 0;
 }
 </style>

@@ -41,6 +41,29 @@ watch(
   }
 );
 
+watch(
+  modal,
+  () => {
+    if (!modal.mostrar) {
+      reiniciarStateGasto();
+    }
+  },
+  {
+    deep: true,
+  }
+);
+
+const reiniciarStateGasto = () => {
+  // Reiniciando el formulario
+  Object.assign(gasto, {
+    nombre: "",
+    cantidad: "",
+    categoria: "",
+    id: null,
+    fecha: Date.now(),
+  });
+};
+
 const definirPresupuesto = (cantidad) => {
   presupuesto.value = cantidad;
   disponible.value = cantidad;
@@ -63,21 +86,27 @@ const ocultarModal = () => {
 };
 
 const guardarGasto = () => {
-  gastos.value.push({
-    ...gasto,
-    id: generarId(),
-  });
+  if (gasto.id) {
+    // Editando
+    const { id } = gasto;
+    const i = gastos.value.findIndex((gasto) => gasto.id === id);
+    gastos.value[i] = { ...gasto };
+  } else {
+    // Registro nuevo
+    gastos.value.push({
+      ...gasto,
+      id: generarId(),
+    });
+  }
 
   ocultarModal();
+  reiniciarStateGasto();
+};
 
-  // Reiniciando el formulario
-  Object.assign(gasto, {
-    nombre: "",
-    cantidad: "",
-    categoria: "",
-    id: null,
-    fecha: Date.now(),
-  });
+const seleccionarGasto = (id) => {
+  const gastoEditar = gastos.value.filter((gasto) => gasto.id === id)[0];
+  Object.assign(gasto, gastoEditar);
+  mostrarModal();
 };
 </script>
 
@@ -102,7 +131,12 @@ const guardarGasto = () => {
       <div class="listado-gastos contenedor">
         <h2>{{ gastos.length > 0 ? "Gastos" : "No hay gastos" }}</h2>
 
-        <Gasto v-for="gasto in gastos" :key="gasto.id" :gasto="gasto" />
+        <Gasto
+          v-for="gasto in gastos"
+          :key="gasto.id"
+          :gasto="gasto"
+          @seleccionar-gasto="seleccionarGasto"
+        />
       </div>
 
       <div class="crear-gasto">
@@ -115,6 +149,7 @@ const guardarGasto = () => {
         @guardar-gasto="guardarGasto"
         :modal="modal"
         :disponible="disponible"
+        :id="gasto.id"
         v-model:nombre="gasto.nombre"
         v-model:cantidad="gasto.cantidad"
         v-model:categoria="gasto.categoria"
