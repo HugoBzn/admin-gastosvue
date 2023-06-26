@@ -108,6 +108,13 @@ const seleccionarGasto = (id) => {
   Object.assign(gasto, gastoEditar);
   mostrarModal();
 };
+
+const eliminarGasto = () => {
+  if (confirm("¿Está seguro que desea eliminar el gasto?")) {
+    gastos.value = gastos.value.filter((gastoState) => gastoState.id !== gasto.id);
+    ocultarModal();
+  }
+};
 </script>
 
 <template>
@@ -147,6 +154,7 @@ const seleccionarGasto = (id) => {
         v-if="modal.mostrar"
         @ocultar-modal="ocultarModal"
         @guardar-gasto="guardarGasto"
+        @eliminar-gasto="eliminarGasto"
         :modal="modal"
         :disponible="disponible"
         :id="gasto.id"

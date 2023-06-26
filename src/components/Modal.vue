@@ -12,6 +12,7 @@ const emit = defineEmits([
   "update:nombre",
   "update:cantidad",
   "update:categoria",
+  "eliminar-gasto",
 ]);
 
 const props = defineProps({
@@ -144,6 +145,14 @@ const isEditting = computed(() => {
         </div>
 
         <input type="submit" :value="[isEditting ? 'Guardar Cambios' : 'Añadir Gasto']" />
+        <button
+          type="button"
+          class="btn-eliminar"
+          v-if="isEditting"
+          @click="$emit('eliminar-gasto')"
+        >
+          Eliminar Gasto
+        </button>
       </form>
     </div>
   </div>
@@ -225,5 +234,17 @@ const isEditting = computed(() => {
 
 .nuevo-gasto input[type="submit"]:hover {
   background-color: #3475dd;
+}
+
+.btn-eliminar {
+  padding: 1rem;
+  width: 100%;
+  border: none;
+  background-color: #ef4444;
+  font-weight: 700;
+  font-size: 2.2rem;
+  color: var(--blanco);
+  cursor: pointer;
+  border-radius: 1rem;
 }
 </style>
